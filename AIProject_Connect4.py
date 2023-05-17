@@ -99,6 +99,36 @@ def checktie(numb_ofcircle):
         total+=i
     return total
 
+# Minimax algorithm for AI Agent
+def minimax(board,depth,maximizingPlayer):
+    gameover =iswinning(board)
+    if depth ==0 or gameover !=0:
+        if gameover ==1:
+            return -1
+        elif gameover ==2:
+            return 1
+        else:
+            return 0
+    
+    if maximizingPlayer:
+        maxEval =float('-inf')
+        for col in range(7):
+            if board[0][col] ==0:
+                new_board =copy.deepcopy(board)
+                new_board =choose(new_board,col,6,2)
+                eval =minimax(new_board, depth - 1, False)
+                maxEval =max(maxEval, eval)
+        return maxEval
+    else:
+        minEval =float('inf')
+        for col in range(7):
+            if board[0][col] ==0:
+                new_board =copy.deepcopy(board)
+                new_board =choose(new_board,col,6,1)
+                eval =minimax(new_board,depth - 1,True)
+                minEval =min(minEval, eval)
+        return minEval
+    
 prop_col=[1/7]*7
 number_of_circles=[0] * 7
 gameover=0
@@ -137,5 +167,7 @@ while gameover ==0:
         gameover=-1
     turn+=1
     turn%=2
+
+    
 
     
