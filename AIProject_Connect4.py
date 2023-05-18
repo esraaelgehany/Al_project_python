@@ -129,6 +129,46 @@ def minimax(board,depth,maximizingPlayer):
                 minEval =min(minEval, eval)
         return minEval
     
+#Alpha beta algorithm     
+def AlphaBeta(board,depth,alpha,beta,maximizingPlayer):
+    gameover =iswinning(board)
+    if depth ==0 or gameover !=0:
+        if gameover ==1:
+            return -1
+        elif gameover ==2:
+            return 1
+        else:
+            return 0
+    
+    if maximizingPlayer:
+        maxEval =float('-inf')
+        for col in range(5):
+            if board[0][col] ==0:
+                new_board =copy.deepcopy(board)
+                new_board =choose(new_board,col,4,2)
+                eval =AlphaBeta(new_board, depth - 1,alpha,beta,False)
+                maxEval =max(maxEval, eval)
+                
+            alpha = max(alpha, maxEval)
+            if beta <= alpha:
+                break
+                
+        return maxEval
+    else:
+        minEval =float('inf')
+        for col in range(5):
+            if board[0][col] ==0:
+                new_board =copy.deepcopy(board)
+                new_board =choose(new_board,col,4,1)
+                eval =AlphaBeta(new_board,depth - 1,alpha,beta,True)
+                minEval =min(minEval, eval)
+                
+            beta = min(beta, minEval)
+            if beta <= alpha:
+                break 
+                
+        return minEval 
+            
 prop_col=[1/7]*7
 number_of_circles=[0] * 7
 gameover=0
