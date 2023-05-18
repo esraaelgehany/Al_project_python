@@ -247,7 +247,7 @@ def easy_level():
             ans2 = choose_col(prop_col, 7, total)
             board = choose(board, ans2, 6, 2)
             number_of_circles[ans2] += 1
-            prop_col = update(prop_col, 6, number_of_circles)
+            prop_col = update(prop_col, 7, number_of_circles)
             GAMEOVER = iswinning(board)
             print(ans2)
 
@@ -427,3 +427,48 @@ def hard_level():
 
 
     
+size = (700,700)
+screen1 = pg.display.set_mode(size)
+pg.display.set_caption("Connect Four")
+
+# Set up the buttons
+font = pg.font.SysFont("Georgia", 30)
+easy_button = pg.Rect(100, 200, 500, 80)
+easy_text = font.render("Easy Level", True, "white")
+easy_text_rect = easy_text.get_rect(center=easy_button.center)
+
+med_button = pg.Rect(100, 350, 500, 80)
+med_text = font.render("Medium Level", True, "white")
+med_text_rect = med_text.get_rect(center=med_button.center)
+
+hard_button = pg.Rect(100, 520, 500, 80)
+hard_text = font.render("Hard Level", True, "white")
+hard_text_rect = hard_text.get_rect(center=hard_button.center)
+
+pg.draw.rect(screen1, "palegreen2", easy_button)
+pg.draw.rect(screen1, "palegreen3", med_button)
+pg.draw.rect(screen1, "palegreen4", hard_button)
+screen.blit(easy_text, easy_text_rect)
+screen.blit(med_text, med_text_rect)
+screen.blit(hard_text, hard_text_rect)
+pg.display.flip()
+
+while True:
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
+            pg.quit()
+            quit()
+        elif event.type == pg.MOUSEBUTTONDOWN:
+            mouse_pos = event.pos
+
+            
+            if easy_button.collidepoint(mouse_pos):
+                easy_level()
+
+         
+            elif med_button.collidepoint(mouse_pos):
+                med_level()
+
+            elif hard_button.collidepoint(mouse_pos):
+                hard_level()
+    pg.display.update()
